@@ -1,0 +1,22 @@
+Project Codename: project_safety
+
+App Description: Safety Web App
+
+Organization: Major League Hacking
+
+Contributors: Deniz K Acikbas (dev-27 #5357), Gerardo Ivan Martinez Espinosa (Lucky Nikhil #1242), 
+
+Features:
+   # Report Incident
+   # Safety Tips
+   # News
+   # Safety Videos
+
+Type: Open Source Software
+
+Development Repository: GitHub  
+
+Task Assignment: Discord
+
+Platforms: Web
+
