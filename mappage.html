@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+
+    <!-- Reference to the Bing Maps SDK -->
+    <script type='text/javascript'
+            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc' 
+            async defer></script>
+    
+    <script type='text/javascript'>
+    function GetMap() {
+        var map = new Microsoft.Maps.Map('#myMap', {
+            credentials: 'AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc',
+            center: new Microsoft.Maps.Location(47.6149, -122.1941)
+        });
+
+        var center = map.getCenter();
+
+        //Create custom Pushpin
+        var pin = new Microsoft.Maps.Pushpin(center);
+
+        //Add the pushpin to the map
+        map.entities.push(pin);
+
+        //Add mouse events to the pushpin.
+        Microsoft.Maps.Events.addHandler(pin, 'click', function () { highlight('reportDiv'); });
+
+    }
+
+    function highlight(id) {
+        //Highlight the mouse event div to indicate that the event has fired.
+        document.getElementById(id).style.display = 'block';
+    }
+    </script>
+</head>
+<body>
+    <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
+    <div id="reportDiv" style="display: none">
+    	<h4>Gay Teen Bullied at XYZ High School</h4>
+    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</div>
+</body>
+</html>
