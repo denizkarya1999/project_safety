@@ -3,8 +3,8 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
-
-    <!-- Reference to the Bing Maps SDK -->
+    <link rel="stylesheet" href="./site.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type='text/javascript'
             src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc' 
             async defer></script>
@@ -36,10 +36,24 @@
     </script>
 </head>
 <body>
-    <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
-    <div id="reportDiv" style="display: none">
-    	<h4>Gay Teen Bullied at XYZ High School</h4>
-    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <div id="myMap"></div>
+    <div id="reportDiv" class="card">
+  		<div class="card-body">
+  			<div class="container">
+  				<div class="row">
+  					<div class="col-4">
+  						<img id="reportImg" src="./img/Bullying.png">
+  					</div>
+  					<div class="col-8">
+  						<h3 class="card-title">Gay Teen Bullied at XYZ High School</h5>
+  						<h5>Ann Arbor / MI</h3>
+  					</div>
+    			</div>
+    			<div class="row">
+    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    			</div>
+    		</div>
+		</div>
 	</div>
 </body>
 </html>
