@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Report Form</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+  <link rel="stylesheet" href="./site.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc&callback=loadMapScenario' async defer></script>
+</head>
+<body id="reportFormBody">
+  <div class="container">
+    <h1>Report Incident Form</h1>
+    <h5>Please note that your information will remain confidential and annoymous.</h5>
+    <form onsubmit="return false">
+      <div class="form-group">
+        <label for="inputName">Your Name (Optional)</label>
+        <input type="text" class="form-control" id="inputName">
+      </div>
+      <div class="form-group">
+        <label for="inputPhoneNumber">Phone Number</label>
+        <input type="text" class="form-control" id="inputPhoneNumber">
+      </div>
+      <div class="form-group">
+        <label for="inputIncident">Type of Incident</label>
+        <select class="form-control" id="inputIncident">
+          <option selected></option>
+          <option>Homophobic Incident</option>
+          <option>Theft</option>
+          <option>Physical Fight</option>
+          <option>Bullying</option>
+          <option>Sexual Assult</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputIncident">Location of Incident</label>
+        <div id="printoutPanel"></div>
+        <div id="locationSearchBoxContainer">
+          <input type="text" id="locationSearchBox" class="form-control"/>
+        </div>
+        <div id="myMap"></div>
+      </div>
+      <div class="form-group">
+        <label for="inputVictimDescription">Victim Description</label>
+        <textarea class="form-control" id="inputVictimDescription" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputIncidentDescription">Description of Incident</label>
+        <textarea class="form-control" id="inputIncidentDescription" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputIncidentFile">Photos or Video of Incident</label>
+        <input type="file" class="form-control-file" id="inputIncidentFile">
+      </div>
+      <button id="submitBtn" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</body>
+<script type='text/javascript'>
+    function loadMapScenario() {
+      Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', {
+        callback: onLoad,
+        errorCallback: onError
+      });
+      function onLoad() {
+        var options = { maxResults: 5 };
+        var manager = new Microsoft.Maps.AutosuggestManager(options);
+        manager.attachAutosuggest('#locationSearchBox', '#locationSearchBoxContainer');
+      }
+      function onError(message) {
+        document.getElementById('printoutPanel').innerHTML = message;
+      }
+    }
+      /*function selectedSuggestion(suggestionResult) {
+        document.getElementById('printoutPanel').innerHTML =
+        'Suggestion: ' + suggestionResult.formattedSuggestion +
+        '<br> Lat: ' + suggestionResult.location.latitude +
+        '<br> Lon: ' + suggestionResult.location.longitude;
+      }*/
+
+    function handleSubmit() {
+      //const data = new FormData(event.target);
+      //const value = Object.fromEntries(data.entries());
+      //console.log({ value });
+      var formData = {
+        "description": $("#inputIncidentDescription").text(),
+        "date": "2012-04-23",
+        "type": "bullying",
+        "latitude": 13.02033432,
+        "longitud": 23.02303432,
+        "victim_description": $("#inputVictimDescription").text(),
+        "phone_number": $("#inputPhoneNumber").text()
+      };
+
+      $.ajax({
+        url: "http://safety-hack.herokuapp.com/swagger-ui.html/api/createReport",
+        type: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify(formData),
+        success: function(result){
+            console.log(result);
+        },
+        error: function (request, status, error) {
+            console.log(request.responseText);
+        }
+
+      })
+    }
+
+    const form = document.querySelector('form');
+    console.log(form)
+    form.addEventListener('submit', handleSubmit);
+
+    
+  </script>
+</html>

@@ -16,3 +16,20 @@
 #reportImg {
 	height: 125px;
 }
+
+#locationSearchBox {
+	box-sizing: border-box !important;
+}
+
+#reportFormBody {
+	background-color: #e5e5e5;
+	margin-top: 50px;
+}
+
+#reportFormBody form {
+	margin-top: 20px;
+}
+
+#submitBtn {
+	margin-top: 20px;
+}
