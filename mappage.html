@@ -1,59 +1,143 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="./site.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script type='text/javascript'
-            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc' 
-            async defer></script>
-    
-    <script type='text/javascript'>
+  <title></title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="./site.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type='text/javascript'
+  src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc' 
+  async defer></script>
+
+  <script type='text/javascript'>
+    var pins = [
+    {
+      "id": 1,
+      "description": "my description",
+      "date": "2012-04-23",
+      "type": "bullying",
+      "latitude": 13.02033432,
+      "location_name": "Zallingi, Sudan",
+      "longitud": 23.02303432,
+      "victim_description": "9 years old",
+      "phone_number": "+52 271113868",
+      "victim_name": "Fulano"
+    },
+    {
+      "id": 2,
+      "description": "my description",
+      "date": "2012-04-23",
+      "type": "bullying",
+      "latitude": 43.651070,
+      "location_name": "Toronto, ON",
+      "longitud": -79.347015,
+      "victim_description": "9 years old",
+      "phone_number": "+52 271113868",
+      "victim_name": "Fulano"
+    }
+
+    ];
     function GetMap() {
-        var map = new Microsoft.Maps.Map('#myMap', {
-            credentials: 'AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc',
-            center: new Microsoft.Maps.Location(47.6149, -122.1941)
+      /*$.ajax({
+        url: "http://safety-hack.herokuapp.com/swagger-ui.html/api/getAll",
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+        }
+      });*/
+
+      var map = new Microsoft.Maps.Map('#myMap', {
+        credentials: 'AqYrASjV1i2G7IMFhw78XLFj7xF-eS_JBvp6k5waGaK1qpmbAq2MvBYB2VeH_4mc',
+        center: new Microsoft.Maps.Location(13.02033432, 23.02303432)
+      });
+      var center = map.getCenter();
+
+      for (i = 0; i < pins.length; i++) {
+        var incidentIcon;
+        switch(pins[i].type) {
+          case "homophobic-incident":
+          incidentIcon = "./img/homophobic-incident.png";
+          break;
+          case "theft":
+          incidentIcon = "./img/theft.png";
+          break;
+          case "fight":
+          incidentIcon = "./img/fight.png";
+          break;
+          case "bullying":
+          incidentIcon = "./img/bullying.png";
+          break;
+          case "sexual-assult":
+          incidentIcon = "./img/sexual-assult.png";
+          break;
+          default:
+        }
+        var location =  new Microsoft.Maps.Location(pins[i].latitude, pins[i].longitud);
+        var pin = new Microsoft.Maps.Pushpin(location, {
+          icon: incidentIcon,
         });
-
-        var center = map.getCenter();
-
-        //Create custom Pushpin
-        var pin = new Microsoft.Maps.Pushpin(center);
-
-        //Add the pushpin to the map
         map.entities.push(pin);
-
-        //Add mouse events to the pushpin.
-        Microsoft.Maps.Events.addHandler(pin, 'click', function () { highlight('reportDiv'); });
-
+        Microsoft.Maps.Events.addHandler(pin, 'click', function () { highlight('reportDiv', i); });
+      }
     }
 
-    function highlight(id) {
-        //Highlight the mouse event div to indicate that the event has fired.
-        document.getElementById(id).style.display = 'block';
+    function highlight(id, pinNumber) {
+      $('.close-icon').on('click',function() {
+        $(this).closest('.card').fadeOut();
+      });
+      var pin = pins[i-1];
+      document.getElementById(id).style.display = 'block';
+      switch(pin.type) {
+        case "homophobic-incident":
+        $(".card-title").text("Homophobic Incident");
+        $("#reportImg").attr("href", "./img/homophobic-incident.png");
+        break;
+        case "theft":
+        $(".card-title").text("Theft");
+        $("#reportImg").attr("href", "./img/theft.png");
+        break;
+        case "fight":
+        $(".card-title").text("Physical Fight");
+        $("#reportImg").attr("href", "./img/fight.png");
+        break;
+        case "bullying":
+        $(".card-title").text("Bullying");
+        $("#reportImg").attr("href", "./img/bullying.png");
+        break;
+        case "sexual-assult":
+        $(".card-title").text("Sexual Assult");
+        $("#reportImg").attr("href", "./img/sexual-assult.png");
+        break;
+        default:
+      }
+      $(".card-text").text(pin.description);
+      $(".location-name").text(pin.location_name);
     }
-    </script>
+  </script>
 </head>
 <body>
-    <div id="myMap"></div>
-    <div id="reportDiv" class="card">
-  		<div class="card-body">
-  			<div class="container">
-  				<div class="row">
-  					<div class="col-4">
-  						<img id="reportImg" src="./img/Bullying.png">
-  					</div>
-  					<div class="col-8">
-  						<h3 class="card-title">Gay Teen Bullied at XYZ High School</h5>
-  						<h5>Ann Arbor / MI</h3>
-  					</div>
-    			</div>
-    			<div class="row">
-    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    			</div>
-    		</div>
-		</div>
-	</div>
+  <div id="myMap"></div>
+  <div id="reportDiv" class="card">
+    <span class="pull-right clickable close-icon" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+    <div class="card-body">
+     <div class="container">
+      <div class="row">
+       <div class="col-4">
+        <img id="reportImg" src="./img/bullying.png">
+      </div>
+      <div class="col-8">
+        <h3 class="card-title">Gay Teen Bullied at XYZ High School</h5>
+          <h5 class="location-name">Ann Arbor / MI</h3>
+          </div>
+        </div>
+        <div class="row">
+          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
