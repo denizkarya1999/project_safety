@@ -19,18 +19,22 @@
       </div>
       <div class="form-group">
         <label for="inputPhoneNumber">Phone Number</label>
-        <input type="text" class="form-control" id="inputPhoneNumber">
+        <input type="tel" class="form-control" id="inputPhoneNumber">
       </div>
       <div class="form-group">
         <label for="inputIncident">Type of Incident</label>
         <select class="form-control" id="inputIncident">
           <option selected></option>
-          <option>Homophobic Incident</option>
-          <option>Theft</option>
-          <option>Physical Fight</option>
-          <option>Bullying</option>
-          <option>Sexual Assult</option>
+          <option value="homophobic-incident">Homophobic Incident</option>
+          <option value="theft">Theft</option>
+          <option value="fight">Physical Fight</option>
+          <option value="bullying">Bullying</option>
+          <option value="sexual-assult">Sexual Assult</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label for="inputIncidentDate">Date and Time of Incident</label>
+        <input class="form-control" type="date" id="inputIncidentDate">
       </div>
       <div class="form-group">
         <label for="inputIncident">Location of Incident</label>
@@ -71,23 +75,15 @@
         document.getElementById('printoutPanel').innerHTML = message;
       }
     }
-      /*function selectedSuggestion(suggestionResult) {
-        document.getElementById('printoutPanel').innerHTML =
-        'Suggestion: ' + suggestionResult.formattedSuggestion +
-        '<br> Lat: ' + suggestionResult.location.latitude +
-        '<br> Lon: ' + suggestionResult.location.longitude;
-      }*/
 
     function handleSubmit() {
-      //const data = new FormData(event.target);
-      //const value = Object.fromEntries(data.entries());
-      //console.log({ value });
       var formData = {
         "description": $("#inputIncidentDescription").text(),
-        "date": "2012-04-23",
-        "type": "bullying",
-        "latitude": 13.02033432,
-        "longitud": 23.02303432,
+        "date": $("#inputIncidentDate").text(),
+        "type": $( "#inputIncident option:selected" ).text(),
+        "latitude": suggestionResult.location.latitude,
+        "location_name": suggestionResult.formattedSuggestion,
+        "longitud": suggestionResult.location.longitude,
         "victim_description": $("#inputVictimDescription").text(),
         "phone_number": $("#inputPhoneNumber").text()
       };

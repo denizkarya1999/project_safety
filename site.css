@@ -33,3 +33,7 @@
 #submitBtn {
 	margin-top: 20px;
 }
+
+.close-icon {
+  cursor: pointer;
+}
